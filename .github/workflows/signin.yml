@@ -19,7 +19,7 @@ jobs:
           SMTP_HOST: 'smtp.office365.com'
           SMTP_PORT: '587'
           SMTP_TLS: 'true'
-          SMTP_USER: 'eganegenie@outlook.com'
-          SMTP_PASSWORD: '!q111111'
-          SMTP_SENDER: 'eganegenie@outlook.com'
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_SENDER: ${{ secrets.SMTP_USER }}
           SMTP_RECEIVER: 'chulonghui2013@163.com'
