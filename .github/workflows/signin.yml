@@ -21,5 +21,5 @@ jobs:
           SMTP_TLS: 'true'
           SMTP_USER: 'eganegenie@outlook.com'
           SMTP_PASSWORD: '!q111111'
-          SMTP_SENDER: 'egenegenie@outlook.com'
+          SMTP_SENDER: 'eganegenie@outlook.com'
           SMTP_RECEIVER: 'chulonghui2013@163.com'
