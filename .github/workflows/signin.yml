@@ -15,7 +15,7 @@ jobs:
           REFRESH_TOKENS: ${{ secrets.REFRESH_TOKENS }}
           GP_TOKEN: ${{ secrets.GP_TOKEN}}
           DO_NOT_REWARD: 'true'
-          PUSH_TYPES: 'TELEGRAM'
+          PUSH_TYPES: 'SMTP'
           SMTP_HOST: 'smtp.office365.com'
           SMTP_PORT: '587'
           SMTP_USER: 'eganegenie@outlook.com'
