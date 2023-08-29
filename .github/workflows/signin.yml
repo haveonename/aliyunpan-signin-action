@@ -10,11 +10,6 @@ jobs:
     name: Aliyun Signin
     runs-on: ubuntu-latest
     steps:
-      - name: Download
-        shell: bash
-        run: |
-          wget https://github.com/ImYrS/aliyun-auto-signin/archive/refs/heads/main.zip -O release.zip
-          echo 'success'
       - uses: ImYrS/aliyun-auto-signin@main
         with:
           REFRESH_TOKENS: ${{ secrets.REFRESH_TOKENS }}
