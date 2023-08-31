@@ -6,7 +6,6 @@ import notify
 
 
 def main():
-    parser = argparse.ArgumentParser()
     ali = Aliyundrive()
     message_all = []
     result = ali.aliyundrive_check_in(token)
