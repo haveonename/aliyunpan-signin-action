@@ -1,105 +1,52 @@
-"""
-    @Author: ImYrS Yang
-    @Date: 2023/2/27
-    @Copyright: ImYrS Yang
-    @Description: 
-"""
-
-import logging
-import smtplib
-from email.mime.text import MIMEText
-from email.header import Header
-from email.utils import formataddr
-
-from configobj import ConfigObj
+import os
+import re
+import argparse
+from aliyundrive import Aliyundrive
+from message_send import MessageSend
 
 
-class Pusher:
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--token_string', type=str, required=True)
+    args = parser.parse_args()
 
-    def __init__(
-            self,
-            host: str,
-            port: int,
-            tls: bool,
-            user: str,
-            password: str,
-            sender: str,
-            receiver: str,
-    ):
-        self.host = host
-        self.port = port
-        self.tls = tls
-        self.user = user
-        self.password = password
-        self.sender = sender
-        self.receiver = receiver
+    token_string = args.token_string
+    pushplus_token = os.environ.get('PUSHPLUS_TOKEN')
+    serverChan_sendkey = os.environ.get('SERVERCHAN_SENDKEY')
+    weCom_tokens = os.environ.get('WECOM_TOKENS')
+    weCom_webhook = os.environ.get('WECOM_WEBHOOK')
+    bark_deviceKey = os.environ.get('BARK_DEVICEKEY')
+    feishu_deviceKey = os.environ.get('FEISHU_DEVICEKEY')
 
-    def send(self, title: str, content: str) -> None:
-        """
-        发送消息
+    message_tokens = {
+        'pushplus_token': pushplus_token,
+        'serverChan_token': serverChan_sendkey,
+        'weCom_tokens': weCom_tokens,
+        'weCom_webhook': weCom_webhook,
+        'bark_deviceKey': bark_deviceKey,
+        'feishu_deviceKey': feishu_deviceKey,
+    }
 
-        :param title: 通知标题
-        :param content: 消息内容
-        :return:
-        """
-        smtp = smtplib.SMTP(self.host, self.port)
-        smtp.ehlo()
+    token_string = token_string.split(',')
+    ali = Aliyundrive()
+    message_all = []
 
-        if self.tls:
-            smtp.starttls()
+    for idx, token in enumerate(token_string):
+        result = ali.aliyundrive_check_in(token)
+        message_all.append(str(result))
 
-        smtp.login(self.user, self.password)
+        if idx < len(token_string) - 1:
+            message_all.append('--')
 
-        message = MIMEText(content, 'plain', 'utf-8')
-        message['From'] = formataddr((str(Header('Airpot checkin', 'utf-8')), self.sender))
-        message['To'] = self.receiver
-        message['Subject'] = title
-        print("开始发送")
-        smtp.sendmail(self.sender, [self.receiver], message.as_string())
+    title = '阿里云盘签到结果'
+    message_all = '\n'.join(message_all)
+    message_all = re.sub('\n+', '\n', message_all).rstrip('\n')
+
+    message_send = MessageSend()
+    message_send.send_all(message_tokens, title, message_all)
+
+    print('finish')
 
 
-def push(
-        config: dict,
-        content: str,
-        content_html: str,
-        title: str,
-) -> bool:
-    """
-    签到消息推送
-
-    :param config: 配置文件, ConfigObj 对象 | dict
-    :param content: 推送内容
-    :param content_html: 推送内容, HTML 格式
-    :param title: 标题
-    :return:
-    """
-    if (
-            not config['smtp_host']
-            or not config['smtp_port']
-            or not config['smtp_tls']
-            or not config['smtp_user']
-            or not config['smtp_password']
-            or not config['smtp_sender']
-            or not config['smtp_receiver']
-    ):
-        logging.error('SMTP 推送参数配置不完整')
-        return False
-
-    try:
-        pusher = Pusher(
-            host=config['smtp_host'],
-            port=config['smtp_port'],
-            tls=config['smtp_tls'],
-            user=config['smtp_user'],
-            password=config['smtp_password'],
-            sender=config['smtp_sender'],
-            receiver=config['smtp_receiver'],
-        )
-        print("smtp参数配置完整")
-        pusher.send(title, content)
-        logging.info('SMTP 推送成功')
-    except Exception as e:
-        logging.error(f'SMTP 推送失败, 错误信息: {e}')
-        return False
-
-    return True
+if __name__ == '__main__':
+    main()
