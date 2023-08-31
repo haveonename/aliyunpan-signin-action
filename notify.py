@@ -133,7 +133,7 @@ def console(title: str, content: str) -> None:
 
 def send_smtp(title: str, content: str) -> None:
     # 发送邮件
-    smtp.send(title, content)
+    smtp.push(title, content)
     
 def dingding_bot(title: str, content: str) -> None:
     """
@@ -495,7 +495,7 @@ def one() -> str:
     res = requests.get(url).json()
     return res["hitokoto"] + "    ----" + res["from"]
 
-
+notify_function.append(send_smtp)
 if push_config.get("BARK_PUSH"):
     notify_function.append(bark)
 if push_config.get("CONSOLE"):
