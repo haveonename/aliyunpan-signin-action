@@ -13,7 +13,7 @@ class Aliyundrive:
     """
 
     def aliyundrive_check_in(self) -> AliyundriveInfo:
-        token = os.environ.get('GP_TOKEN')
+        token = os.environ.get('REFRESH_TOKENS')
         info = AliyundriveInfo(
             success=False,
             user_name='',
