@@ -63,13 +63,13 @@ def push(
 
     try:
         pusher = Pusher()
-        if (not self.host
-            or not self.port
-            or not self.tls 
-            or not self.user
-            or not self.password
-            or not self.sender
-            or not self.receiver):
+        if (not pusher.host
+            or not pusher.port
+            or not pusher.tls 
+            or not pusher.user
+            or not pusher.password
+            or not pusher.sender
+            or not pusher.receiver):
             logging.error('SMTP 推送参数配置不完整')
             return False
             
