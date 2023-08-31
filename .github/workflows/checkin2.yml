@@ -25,7 +25,7 @@ jobs:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SMTP_SENDER: ${{ secrets.SMTP_USER }}
-          SMTP_RECEIVER: 'chulonghui2013@163.com'
+          SMTP_RECEIVER: ${{ secrets.SMTP_RECEIVER }}
           DD_TOKEN: ${{ secrets.dd_token }}
           DD_SECRET: ${{ secrets.dd_secret }}
       - uses: gautamkrishnar/keepalive-workflow@master
