@@ -8,7 +8,7 @@ import notify
 def main():
     ali = Aliyundrive()
     message_all = []
-    result = ali.aliyundrive_check_in(token)
+    result = ali.aliyundrive_check_in()
     message_all.append(str(result))
 
     title = '阿里云盘签到结果'
