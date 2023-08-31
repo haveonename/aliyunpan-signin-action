@@ -28,6 +28,8 @@ class Aliyundrive:
             return info
 
         try:
+            print(token)
+            print('xxxxxxxxx')
             flag, user_name, access_token, message = self._get_access_token(token)
             if not flag:
                 return handle_error(f'get_access_token error: {message}')
