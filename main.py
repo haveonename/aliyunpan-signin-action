@@ -9,13 +9,8 @@ def main():
     parser = argparse.ArgumentParser()
     ali = Aliyundrive()
     message_all = []
-
-    for idx, token in enumerate(token_string):
-        result = ali.aliyundrive_check_in(token)
-        message_all.append(str(result))
-
-        if idx < len(token_string) - 1:
-            message_all.append('--')
+    result = ali.aliyundrive_check_in(token)
+    message_all.append(str(result))
 
     title = '阿里云盘签到结果'
     message_all = '\n'.join(message_all)
