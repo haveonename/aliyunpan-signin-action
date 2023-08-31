@@ -50,9 +50,8 @@ class Pusher:
 
 
 def push(
-        content: str,
-        content_html: str,
         title: str,
+        content: str
 ) -> bool:
     """
     签到消息推送
