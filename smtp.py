@@ -42,7 +42,7 @@ class Pusher:
         smtp.login(self.user, self.password)
 
         message = MIMEText(content, 'plain', 'utf-8')
-        message['From'] = formataddr((str(Header('Airpot checkin', 'utf-8')), self.sender))
+        message['From'] = formataddr((str(Header('阿里云盘签到 checkin', 'utf-8')), self.sender))
         message['To'] = self.receiver
         message['Subject'] = title
         print("开始发送")
