@@ -1,0 +1,24 @@
+name: aliyundrive-checkin
+on:
+  schedule:
+  - cron: 20 23 * * *
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install requirements
+        run: |
+          pip3 install -r ./requirements.txt
+      - name: Run checkin
+        run: |
+          python3 ./main.py --token_string "${{ secrets.TOKEN }}"
+        env:
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          SERVERCHAN_SENDKEY: ${{ secrets.SCKEY }}
+          WECOM_TOKENS: ${{ secrets.WECOM_TOKENS }}
+          WECOM_WEBHOOK: ${{ secrets.WECOM_WEBHOOK }}
+          BARK_DEVICEKEY: ${{ secrets.BARK_DEVICEKEY }}
+          FEISHU_DEVICEKEY: ${{ secrets.FEISHU_DEVICEKEY }}
+      - uses: gautamkrishnar/keepalive-workflow@master
