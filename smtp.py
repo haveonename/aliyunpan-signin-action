@@ -5,8 +5,7 @@
     @Description: 
 """
 
-import logging
-import smtplib
+import logging, os, smtplib
 from email.mime.text import MIMEText
 from email.header import Header
 from email.utils import formataddr
@@ -16,23 +15,15 @@ from configobj import ConfigObj
 
 class Pusher:
 
-    def __init__(
-            self,
-            host: str,
-            port: int,
-            tls: bool,
-            user: str,
-            password: str,
-            sender: str,
-            receiver: str,
-    ):
-        self.host = host
-        self.port = port
-        self.tls = tls
-        self.user = user
-        self.password = password
-        self.sender = sender
-        self.receiver = receiver
+    def __init__():
+        #SMTP
+        self.host = os.environ.get('SMTP_HOST')
+        self.port = os.environ.get('SMTP_PORT')
+        self.tls = os.environ.get('SMTP_TLS')
+        self.user = os.environ.get('SMTP_USER')
+        self.password = os.environ.get('SMTP_PASSWORD')
+        self.sender = os.environ.get('SMTP_SENDER')
+        self.receiver = os.environ.get('SMTP_RECEIVER')
 
     def send(self, title: str, content: str) -> None:
         """
@@ -59,42 +50,30 @@ class Pusher:
 
 
 def push(
-        config: dict,
         content: str,
         content_html: str,
         title: str,
 ) -> bool:
     """
     签到消息推送
-
-    :param config: 配置文件, ConfigObj 对象 | dict
     :param content: 推送内容
     :param content_html: 推送内容, HTML 格式
     :param title: 标题
     :return:
     """
-    if (
-            not config['smtp_host']
-            or not config['smtp_port']
-            or not config['smtp_tls']
-            or not config['smtp_user']
-            or not config['smtp_password']
-            or not config['smtp_sender']
-            or not config['smtp_receiver']
-    ):
-        logging.error('SMTP 推送参数配置不完整')
-        return False
 
     try:
-        pusher = Pusher(
-            host=config['smtp_host'],
-            port=config['smtp_port'],
-            tls=config['smtp_tls'],
-            user=config['smtp_user'],
-            password=config['smtp_password'],
-            sender=config['smtp_sender'],
-            receiver=config['smtp_receiver'],
-        )
+        pusher = Pusher()
+        if (not self.host
+            or not self.port
+            or not self.tls 
+            or not self.user
+            or not self.password
+            or not self.sender
+            or not self.receiver):
+            logging.error('SMTP 推送参数配置不完整')
+            return False
+            
         print("smtp参数配置完整")
         pusher.send(title, content)
         logging.info('SMTP 推送成功')
