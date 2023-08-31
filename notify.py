@@ -131,7 +131,10 @@ def console(title: str, content: str) -> None:
     """
     print(f"{title}\n\n{content}")
 
-
+def send_smtp(title: str, content: str) -> None:
+    # 发送邮件
+    smtp.send(title, content)
+    
 def dingding_bot(title: str, content: str) -> None:
     """
     使用 钉钉机器人 推送消息。
