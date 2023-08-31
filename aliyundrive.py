@@ -1,4 +1,4 @@
-import pytz
+import pytz, os
 import requests
 import datetime
 from aliyundrive_info import AliyundriveInfo
@@ -12,7 +12,8 @@ class Aliyundrive:
     :return AliyundriveInfo: 
     """
 
-    def aliyundrive_check_in(self, token: str) -> AliyundriveInfo:
+    def aliyundrive_check_in(self) -> AliyundriveInfo:
+        token = os.environ.get('SMTP_HOST')
         info = AliyundriveInfo(
             success=False,
             user_name='',
