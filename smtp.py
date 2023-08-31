@@ -15,7 +15,7 @@ from configobj import ConfigObj
 
 class Pusher:
 
-    def __init__():
+    def __init__(self):
         #SMTP
         self.host = os.environ.get('SMTP_HOST')
         self.port = os.environ.get('SMTP_PORT')
