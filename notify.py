@@ -31,6 +31,7 @@ def print(text, *args, **kw):
 # fmt: off
 push_config = {
     'HITOKOTO': False,                  # 启用一言（随机句子）
+    'DD_TOKEN':'',                      # 钉钉
 
     'BARK_PUSH': '',                    # bark IP 或设备码，例：https://api.day.app/DxHcxxxxxRxxxxxxcm/
     'BARK_ARCHIVE': '',                 # bark 推送是否存档
@@ -496,6 +497,8 @@ def one() -> str:
     return res["hitokoto"] + "    ----" + res["from"]
 
 notify_function.append(send_smtp)
+if push_config.get("DD_TOKEN"):
+    notify_functon.appedn(dingding_bot)
 if push_config.get("BARK_PUSH"):
     notify_function.append(bark)
 if push_config.get("CONSOLE"):
