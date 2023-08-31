@@ -498,7 +498,7 @@ def one() -> str:
 
 notify_function.append(send_smtp)
 if push_config.get("DD_TOKEN"):
-    notify_functon.appedn(dingding_bot)
+    notify_function.append(dingding_bot)
 if push_config.get("BARK_PUSH"):
     notify_function.append(bark)
 if push_config.get("CONSOLE"):
