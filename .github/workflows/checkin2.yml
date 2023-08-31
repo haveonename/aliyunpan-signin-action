@@ -13,12 +13,17 @@ jobs:
           pip3 install -r ./requirements.txt
       - name: Run checkin
         run: |
-          python3 ./main.py --token_string "${{ secrets.TOKEN }}"
+          python3 ./main.py
         env:
-          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
-          SERVERCHAN_SENDKEY: ${{ secrets.SCKEY }}
-          WECOM_TOKENS: ${{ secrets.WECOM_TOKENS }}
-          WECOM_WEBHOOK: ${{ secrets.WECOM_WEBHOOK }}
-          BARK_DEVICEKEY: ${{ secrets.BARK_DEVICEKEY }}
-          FEISHU_DEVICEKEY: ${{ secrets.FEISHU_DEVICEKEY }}
+          REFRESH_TOKENS: ${{ secrets.REFRESH_TOKENS }}
+          GP_TOKEN: ${{ secrets.GP_TOKEN}}
+          DO_NOT_REWARD: 'true'
+          PUSH_TYPES: 'SMTP'
+          SMTP_HOST: 'smtp.office365.com'
+          SMTP_PORT: '587'
+          SMTP_TLS: 'true'
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_SENDER: ${{ secrets.SMTP_USER }}
+          SMTP_RECEIVER: 'chulonghui2013@163.com'
       - uses: gautamkrishnar/keepalive-workflow@master
