@@ -495,10 +495,9 @@ def one() -> str:
     url = "https://v1.hitokoto.cn/"
     res = requests.get(url).json()
     return res["hitokoto"] + "    ----" + res["from"]
-
+    
+notify_function.append(dingding_bot)
 notify_function.append(send_smtp)
-if push_config.get("DD_TOKEN"):
-    notify_function.append(dingding_bot)
 if push_config.get("BARK_PUSH"):
     notify_function.append(bark)
 if push_config.get("CONSOLE"):
