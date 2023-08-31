@@ -28,8 +28,6 @@ class Aliyundrive:
             return info
 
         try:
-            print(token)
-            print('xxxxxxxxx')
             flag, user_name, access_token, message = self._get_access_token(token)
             if not flag:
                 return handle_error(f'get_access_token error: {message}')
@@ -176,7 +174,7 @@ class Aliyundrive:
             type = reward['type']
 
             if type == "dailySignIn":
-                award_notice = name
+                award_notice = name + '   不领取奖励'
             if type == "dailyTask":
                 task_notice = f'{remind}（{name}）'
         return success, '', award_notice, task_notice
