@@ -11,7 +11,7 @@ def main():
     result = ali.aliyundrive_check_in()
     message_all.append(str(result))
 
-    title = '阿里云盘签到结果'
+    title = '阿里云盘签到结果：'
     message_all = '\n'.join(message_all)
     message_all = re.sub('\n+', '\n', message_all).rstrip('\n')
 
